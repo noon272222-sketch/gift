@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Diya 🎀</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Pacifico&display=swap');
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  min-height:100vh;
+  overflow:hidden;
+  font-family:'Baloo 2',sans-serif;
+  background:linear-gradient(135deg,#ffe5f0,#fff4dc,#e7f7ff);
+  color:#54213d;
+}
+
+.page{
+  position:absolute;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:25px;
+  overflow:hidden;
+}
+
+.page.active{
+  display:flex;
+  animation:pageIn .7s ease;
+}
+
+@keyframes pageIn{
+  from{opacity:0;transform:scale(.96)}
+  to{opacity:1;transform:scale(1)}
+}
+
+.card{
+  width:min(92vw,650px);
+  padding:35px 25px;
+  border-radius:35px;
+  background:rgba(255,255,255,.72);
+  backdrop-filter:blur(12px);
+  box-shadow:0 20px 60px rgba(160,70,110,.18);
+  border:2px solid rgba(255,255,255,.8);
+  position:relative;
+  z-index:5;
+}
+
+.small{
+  font-size:18px;
+  margin-bottom:10px;
+}
+
+h1{
+  font-family:'Pacifico',cursive;
+  font-size:clamp(42px,11vw,75px);
+  color:#e65389;
+  line-height:1.2;
+  margin:10px 0;
+}
+
+h2{
+  font-size:clamp(28px,7vw,48px);
+  color:#d83d78;
+  margin-bottom:12px;
+}
+
+.message{
+  font-size:20px;
+  line-height:1.5;
+  margin:15px auto;
+  max-width:520px;
+}
+
+button{
+  border:0;
+  padding:15px 28px;
+  margin-top:18px;
+  border-radius:50px;
+  background:linear-gradient(135deg,#ff5d98,#ff8ab6);
+  color:white;
+  font-family:'Baloo 2',sans-serif;
+  font-size:19px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(230,75,130,.3);
+  transition:.25s;
+}
+
+button:hover{
+  transform:translateY(-3px) scale(1.03);
+}
+
+button:active{
+  transform:scale(.95);
+}
+
+/* BTS GIF */
+.kitten{
+  width:150px;
+  height:150px;
+  margin:0 auto 15px;
+  object-fit:cover;
+  border-radius:30px;
+  box-shadow:0 10px 25px rgba(0,0,0,.12);
+  animation:bounce 2s infinite;
+}
+
+@keyframes bounce{
+  0%,100%{transform:translateY(0) rotate(-2deg)}
+  50%{transform:translateY(-10px) rotate(2deg)}
+}
+
+/* CAKE */
+.cake{
+  position:relative;
+  width:150px;
+  height:125px;
+  margin:10px auto;
+}
+
+.cake-body{
+  position:absolute;
+  bottom:0;
+  left:8px;
+  width:134px;
+  height:70px;
+  border-radius:15px 15px 22px 22px;
+  background:linear-gradient(#ff8db4,#ff5e91);
+  box-shadow:0 8px 0 #e7467b;
+}
+
+.cream{
+  position:absolute;
+  top:40px;
+  left:8px;
+  width:134px;
+  height:21px;
+  background:#fff7fb;
+  border-radius:50%;
+  z-index:2;
+}
+
+.candle{
+  position:absolute;
+  top:3px;
+  left:69px;
+  width:15px;
+  height:47px;
+  border-radius:5px;
+  background:#8bd9ff;
+}
+
+.flame{
+  position:absolute;
+  top:-22px;
+  left:2px;
+  width:12px;
+  height:19px;
+  background:#ffb52e;
+  border-radius:50% 50% 50% 0;
+  transform:rotate(45deg);
+  animation:flicker .4s infinite alternate;
+}
+
+@keyframes flicker{
+  from{transform:rotate(45deg) scale(.9)}
+  to{transform:rotate(45deg) scale(1.15)}
+}
+
+/* BOUQUET */
+.bouquet{
+  font-size:70px;
+  animation:sway 2s infinite;
+}
+
+@keyframes sway{
+  0%,100%{transform:rotate(-3deg)}
+  50%{transform:rotate(3deg)}
+}
+
+/* FLOATING DECOR */
+.decor{
+  position:absolute;
+  pointer-events:none;
+  animation:floatUp linear infinite;
+  opacity:.8;
+}
+
+@keyframes floatUp{
+  from{
+    transform:translateY(110vh) rotate(0deg);
+  }
+  to{
+    transform:translateY(-15vh) rotate(360deg);
+  }
+}
+
+/* HEARTS */
+.heart{
+  position:absolute;
+  color:#ff78a9;
+  font-size:25px;
+  animation:heartFloat 4s ease-in infinite;
+  opacity:0;
+}
+
+@keyframes heartFloat{
+  0%{
+    transform:translateY(30px) scale(.5);
+    opacity:0;
+  }
+  20%{
+    opacity:1;
+  }
+  100%{
+    transform:translateY(-500px) scale(1.2);
+    opacity:0;
+  }
+}
+
+/* CONFETTI */
+.confetti{
+  position:fixed;
+  width:9px;
+  height:15px;
+  top:-20px;
+  z-index:100;
+  animation:confettiFall 3s linear forwards;
+}
+
+@keyframes confettiFall{
+  to{
+    transform:translateY(110vh) rotate(720deg);
+  }
+}
+
+/* FUN GAME */
+.game-area{
+  position:relative;
+  width:100%;
+  height:180px;
+  margin-top:15px;
+  border-radius:25px;
+  background:rgba(255,230,240,.55);
+  border:2px dashed #ff9abc;
+  overflow:hidden;
+}
+
+.game-heart{
+  position:absolute;
+  font-size:42px;
+  cursor:pointer;
+  user-select:none;
+  transition:.15s;
+  animation:gameHeartBeat .7s infinite alternate;
+}
+
+@keyframes gameHeartBeat{
+  from{transform:scale(.9)}
+  to{transform:scale(1.1)}
+}
+
+.score{
+  font-size:22px;
+  font-weight:700;
+  color:#d83d78;
+  margin-top:10px;
+}
+
+/* MOBILE */
+@media(max-width:500px){
+
+  .card{
+    padding:28px 18px;
+  }
+
+  .message{
+    font-size:18px;
+  }
+
+  .kitten{
+    width:125px;
+    height:125px;
+  }
+
+  button{
+    font-size:17px;
+  }
+
+  .game-area{
+    height:160px;
+  }
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="decorations"></div>
+<div id="hearts"></div>
+
+<!-- PAGE 1 -->
+
+<section class="page active" id="page1">
+
+  <div class="card">
+
+
+<div class="small">
+  🐾 A tiny message for someone special...
+</div>
+
+<img
+  class="kitten"
+  src="https://media.giphy.com/media/PVqADz3Yc7cKHuJWBQ/giphy.gif"
+  alt="BTS">
+
+<h1>Hey Diya! 🎀</h1>
+
+<p class="message">
+  Ye mene Thodi bohot mehnat krke tumhare liye banaya h...
+  <br>
+  <b>Are you ready for surprise?? 👀</b>
+</p>
+
+<button onclick="nextPage(2);party()">
+  Open Your Surprise 🎁
+</button>
+
+
+  </div>
+
+</section>
+
+<!-- PAGE 2 -->
+
+<section class="page" id="page2">
+
+  <div class="card">
+
+
+<div class="bouquet">
+  💐🌸💐
+</div>
+
+<h2>
+  HAPPY BIRTHDAY
+  <br>
+  DIYA AKA Bauni Badmosh! 🎂
+</h2>
+
+<div class="cake">
+
+  <div class="candle">
+    <div class="flame"></div>
+  </div>
+
+  <div class="cream"></div>
+  <div class="cake-body"></div>
+
+</div>
+
+<p class="message">
+  Ek Aur Saal Nikalne ke liye congratulations.....
+  <br>
+  <br>
+  <b>
+    BS Ese Hi haste rehna and hasate rehna and jesi ho vesi bani rehna....
+  </b>
+</p>
+
+<button onclick="nextPage(3);party()">
+  One More Surprise 👀✨
+</button>
+
+
+  </div>
+
+</section>
+
+<!-- PAGE 3 - SPECIAL MESSAGE -->
+
+<section class="page" id="page3">
+
+  <div class="card">
+
+
+<div class="bouquet">
+  💗🌸💗
+</div>
+
+<h2>
+  Special Message 💌
+</h2>
+
+<p class="message">
+
+  Ik ki tumhare paas bohot kam log h,
+  <br>
+  same mere paas bhi bohot kam h...
+
+  <br>
+  <br>
+
+  And honestly,
+  <br>
+
+  <b>
+    you're so precious to me. 🫶💗
+  </b>
+
+  <br>
+  <br>
+
+  Isliye chahe hum kitna bhi dur ho,
+  bas humara ye bond esa hi rehna cahiye. 🎀
+
+  <br>
+  <br>
+
+  You really are one of those few people
+  I'm genuinely glad I met. 🌷
+
+</p>
+
+<button onclick="nextPage(4);startGame()">
+  Okay, Ab Ek Fun Game! 🎮✨
+</button>
+
+
+  </div>
+
+</section>
+
+<!-- PAGE 4 - FUN GAME -->
+
+<section class="page" id="page4">
+
+  <div class="card">
+
+
+<div class="bouquet">
+  🎮💗🎀
+</div>
+
+<h2>
+  Catch The Heart! 💗
+</h2>
+
+<p class="message">
+
+  Heart ko click karo jitni baar pakad sako! 😂
+  <br>
+  Dekhte hain birthday girl ka score kitna hota hai 👀
+
+</p>
+
+<div class="score">
+  Score: <span id="score">0</span>
+</div>
+
+<div class="game-area" id="gameArea">
+
+  <div
+    class="game-heart"
+    id="gameHeart"
+    onclick="catchHeart()">
+    💗
+  </div>
+
+</div>
+
+<button onclick="resetGame()">
+  Play Again 🔄
+</button>
+
+<br>
+
+<button onclick="nextPage(5);party()">
+  Last Surprise 💌✨
+</button>
+
+
+  </div>
+
+</section>
+
+<!-- PAGE 5 - FOR MY BESTIE LAST -->
+
+<section class="page" id="page5">
+
+  <div class="card">
+
+
+<div class="bouquet">
+  🌷💐🌷
+</div>
+
+<h2>
+  For My Bestie 💗
+</h2>
+
+<p class="message">
+
+  Dear Diya,
+  <br><br>
+
+  Happy Birthday uss insaan ko jo mujhe randomly mila
+  and mera sabse precious friend ban gaya ❤️
+
+  <br><br>
+
+  Me kos ta tha neet exam ko jisne meri zindagi kharab ki
+  but now i thank it cauz uski vajah se i got friend like u 🫶
+
+  <br><br>
+
+  Bas Esi hi rehne and mere sath rehna agar kismat me likha hua hoga to kabhi milenge. 🫶
+
+  <br><br>
+
+  <b>
+    Happy Birthday, Bestie! 🎂💗
+  </b>
+
+  <br>
+
+   Jao Ab CAKE Khaa lo usse pahle ki me khaa jaau.. 😭😂
+
+</p>
+
+<button onclick="makeWish()">
+  Make a Wish ✨
+</button>
+```
+
+  </div>
+
+</section>
+
+<script>
+
+/* PAGE SWITCH */
+
+function nextPage(number){
+
+  document.querySelectorAll('.page').forEach(page=>{
+    page.classList.remove('active');
+  });
+
+  document.getElementById('page'+number).classList.add('active');
+
+  window.scrollTo(0,0);
+}
+
+
+/* CONFETTI */
+
+function party(){
+
+  for(let i=0;i<100;i++){
+
+    const confetti=document.createElement('div');
+
+    confetti.className='confetti';
+
+    confetti.style.left=
+      Math.random()*100+'vw';
+
+    confetti.style.animationDuration=
+      (2+Math.random()*2)+'s';
+
+    confetti.style.animationDelay=
+      Math.random()*.5+'s';
+
+    confetti.style.background=
+      `hsl(${Math.random()*360},80%,65%)`;
+
+    confetti.style.transform=
+      `rotate(${Math.random()*360}deg)`;
+
+    document.body.appendChild(confetti);
+
+    setTimeout(()=>{
+      confetti.remove();
+    },4500);
+
+  }
+
+}
+
+
+/* FINAL WISH */
+
+function makeWish(){
+
+  party();
+
+  const messages=[
+
+    "✨ Wish sent successfully!",
+    "🎂 Cake calories don't count today!",
+    "💗 Bestie level: MAXIMUM!",
+    "🐱 Even the kittens are celebrating!",
+    "🎉 Birthday mode: ACTIVATED!"
+
+  ];
+
+  const random=
+    messages[Math.floor(Math.random()*messages.length)];
+
+  setTimeout(()=>{
+
+    alert(
+      random+
+      "\n\nHappy Birthday Diya! 🎀💐🎂"
+    );
+
+  },500);
+
+}
+
+
+/* FLOATING FLOWERS + BALLOONS */
+
+function createDecor(){
+
+  const container=
+    document.getElementById('decorations');
+
+  const items=[
+    '🌸',
+    '🌷',
+    '🌼',
+    '💮',
+    '🎈',
+    '✨',
+    '🎀',
+    '💐'
+  ];
+
+  for(let i=0;i<25;i++){
+
+    const element=
+      document.createElement('div');
+
+    element.className='decor';
+
+    element.innerText=
+      items[Math.floor(Math.random()*items.length)];
+
+    element.style.left=
+      Math.random()*100+'vw';
+
+    element.style.fontSize=
+      (18+Math.random()*25)+'px';
+
+    element.style.animationDuration=
+      (8+Math.random()*10)+'s';
+
+    element.style.animationDelay=
+      (-Math.random()*15)+'s';
+
+    container.appendChild(element);
+
+  }
+
+}
+
+
+/* FLOATING HEARTS */
+
+function createHearts(){
+
+  const container=
+    document.getElementById('hearts');
+
+  for(let i=0;i<15;i++){
+
+    const heart=
+      document.createElement('div');
+
+    heart.className='heart';
+
+    heart.innerText='♥';
+
+    heart.style.left=
+      Math.random()*100+'vw';
+
+    heart.style.bottom=
+      (-Math.random()*100)+'px';
+
+    heart.style.animationDelay=
+      Math.random()*5+'s';
+
+    heart.style.animationDuration=
+      (4+Math.random()*4)+'s';
+
+    container.appendChild(heart);
+
+  }
+
+}
+
+
+/* FUN GAME */
+
+let score=0;
+
+
+function startGame(){
+
+  score=0;
+
+  document.getElementById('score').innerText=score;
+
+  moveHeart();
+
+}
+
+
+function catchHeart(){
+
+  score++;
+
+  document.getElementById('score').innerText=score;
+
+  moveHeart();
+
+  if(score===10){
+
+    party();
+
+    setTimeout(()=>{
+
+      alert(
+        "🎉 WOW! 10/10! Birthday girl wins! 💗😂"
+      );
+
+    },200);
+
+  }
+
+}
+
+
+function moveHeart(){
+
+  const heart=
+    document.getElementById('gameHeart');
+
+  const area=
+    document.getElementById('gameArea');
+
+  const maxX=
+    area.clientWidth-55;
+
+  const maxY=
+    area.clientHeight-55;
+
+  const x=
+    Math.random()*maxX;
+
+  const y=
+    Math.random()*maxY;
+
+  heart.style.left=x+'px';
+
+  heart.style.top=y+'px';
+
+}
+
+
+function resetGame(){
+
+  score=0;
+
+  document.getElementById('score').innerText=score;
+
+  moveHeart();
+
+}
+
+
+/* START DECORATIONS */
+
+createDecor();
+createHearts();
+
+</script>
+
+</body>
+</html>
